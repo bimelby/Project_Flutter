@@ -13,7 +13,7 @@
 - 🗂️ Kategorikan catatan dengan sistem label
 - 🌙 Mode gelap untuk kenyamanan mata
 - 🔐 Penyimpanan data aman dengan Firebase
-- 📱 Desain responsif untuk semua perangkat
+- 📱 Desain responsif untuk semua perangka
 - ⚡ Sinkronisasi cloud antar perangkat
 -  / Dan fitur lainnya
 
@@ -59,21 +59,53 @@ flutter run
 ## 🛠️ Struktur Proyek
 
 ```
-lib/
-├── main.dart          # Entry point aplikasi
-├── models/            # Model data
-│   └── note.dart
-├── services/          # Layanan backend
-│   └── firestore_service.dart
-├── screens/           # Halaman aplikasi
-│   ├── home_screen.dart
-│   ├── note_editor.dart
-│   └── settings_screen.dart
-├── widgets/           # Komponen UI
-│   ├── note_card.dart
-│   └── search_bar.dart
-└── utils/             # Utilities
-    └── colors.dart
+foshmed/
+├── lib/
+│   ├── main.dart
+│   ├── models/
+│   │   ├── user.dart
+|   |   ├── reminder.dart
+|   |   ├── templet.dart
+│   │   └── entry.dart
+│   ├── providers/
+│   │   ├── auth_provider.dart
+│   │   ├── entry_provider.dart
+│   │   └── theme_provider.dart
+│   ├── screens/
+│   │   ├── splash_screen.dart
+│   │   ├── auth/
+│   │   │   ├── login_screen.dart
+│   │   │   └── register_screen.dart
+│   │   ├── home_screen.dart
+│   │   ├── entry/
+│   │   │   ├── add_entry_screen.dart
+│   │   │   └── entry_detail_screen.dart
+│   │   ├── profile_screen.dart
+│   │   └── search_screen.dart
+│   ├── widgets/
+│   │   ├── glass_container.dart
+│   │   ├── custom_button.dart
+│   │   ├── mood_selector.dart
+│   │   └── entry_card.dart
+│   └── utils/
+│       └── constants.dart
+├── assets/
+│   └── images/
+
+
+   api/
+   ├── config/
+   │   └── database.php
+   ├── register.php
+   ├── login.php
+   ├── entries.php
+   ├── add_entry.php
+   ├── update_entry.php
+   ├── delete_entry.php
+   └── uploads/
+   |  ├── entries
+   |  └── profiles
+   
 ```
 
 ## 🤝 Berkontribusi
@@ -92,3 +124,4 @@ Proyek ini dilisensikan di bawah [Lisensi MIT](LICENSE).
 ---
 
 **Foshmed** © 2023 - Dibangun dengan ❤️ menggunakan Flutter
+**Tertanda Muhammad Haikal Bima** _01 juni 2025_  
