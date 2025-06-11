@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen>
     _tabController = TabController(
         length: Constants.categoryOptions.length + 1, vsync: this);
     _loadEntries();
-    /*_initializeReminders();*/
+    _initializeReminders();
   }
 
   @override
@@ -62,13 +62,14 @@ class _HomeScreenState extends State<HomeScreen>
     });
   }
 
-  /*Future<void> _initializeReminders() async {
-    final reminderProvider = Provider.of<ReminderProvider>(context, listen: false);
+  Future<void> _initializeReminders() async {
+    final reminderProvider =
+        Provider.of<ReminderProvider>(context, listen: false);
     await reminderProvider.initialize();
-    
+
     // Schedule break reminder
     await reminderProvider.scheduleBreakReminder();
-  }*/
+  }
 
   Future<void> _refreshEntries() async {
     await _loadEntries();
@@ -107,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen>
         : entryProvider.entries
             .where((entry) => entry.category == _selectedCategory)
             .toList();
+    filteredEntries.sort((a, b) => b.date.compareTo(a.date));
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -292,6 +294,7 @@ class _HomeScreenState extends State<HomeScreen>
                         ),
                       ),
                     )
+                    
                   : ListView.builder(
                       padding: EdgeInsets.only(
                           top: 130, bottom: 100, left: 16, right: 16),

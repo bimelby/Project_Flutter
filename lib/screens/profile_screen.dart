@@ -12,6 +12,8 @@ import 'package:foshmed/widgets/glass_container.dart';
 import 'package:foshmed/widgets/custom_button.dart';
 import 'package:foshmed/utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -26,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   late AnimationController _fadeController;
   late AnimationController _scaleController;
   late AnimationController _statsController;
-  
+
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -53,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   @override
   void initState() {
     super.initState();
-    
+
     // Initialize controllers
     _slideController = AnimationController(
       duration: const Duration(milliseconds: 1000),
@@ -107,7 +109,8 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     // Initialize form data
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    _nameController = TextEditingController(text: authProvider.user?.name ?? '');
+    _nameController =
+        TextEditingController(text: authProvider.user?.name ?? '');
     _passwordController = TextEditingController();
     _confirmPasswordController = TextEditingController();
 
@@ -121,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     _slideController.forward();
     _fadeController.forward();
     _scaleController.forward();
-    
+
     Future.delayed(const Duration(milliseconds: 500), () {
       _statsController.forward();
     });
@@ -157,59 +160,62 @@ class _ProfileScreenState extends State<ProfileScreen>
   void _calculateStatistics() {
     final entryProvider = Provider.of<EntryProvider>(context, listen: false);
     final entries = entryProvider.entries;
-    
+
     _totalEntries = entries.length;
-    
+
     // Calculate mood statistics
     _moodStats.clear();
     for (var entry in entries) {
       _moodStats[entry.mood] = (_moodStats[entry.mood] ?? 0) + 1;
     }
-    
+
     // Calculate category statistics
     _categoryStats.clear();
     for (var entry in entries) {
-      _categoryStats[entry.category] = (_categoryStats[entry.category] ?? 0) + 1;
+      _categoryStats[entry.category] =
+          (_categoryStats[entry.category] ?? 0) + 1;
     }
-    
+
     // Find dominant mood and favorite category
     if (_moodStats.isNotEmpty) {
-      _dominantMood = _moodStats.entries
-          .reduce((a, b) => a.value > b.value ? a : b)
-          .key;
+      _dominantMood =
+          _moodStats.entries.reduce((a, b) => a.value > b.value ? a : b).key;
     }
-    
+
     if (_categoryStats.isNotEmpty) {
       _favoriteCategory = _categoryStats.entries
           .reduce((a, b) => a.value > b.value ? a : b)
           .key;
     }
-    
+
     // Calculate current streak (simplified - consecutive days with entries)
     _currentStreak = _calculateStreak(entries);
   }
 
   int _calculateStreak(List entries) {
     if (entries.isEmpty) return 0;
-    
+
     entries.sort((a, b) => b.date.compareTo(a.date));
-    
+
     int streak = 0;
     DateTime currentDate = DateTime.now();
-    
+
     for (var entry in entries) {
-      final entryDate = DateTime(entry.date.year, entry.date.month, entry.date.day);
-      final checkDate = DateTime(currentDate.year, currentDate.month, currentDate.day);
-      
-      if (entryDate.isAtSameMomentAs(checkDate) || 
-          entryDate.isAtSameMomentAs(checkDate.subtract(Duration(days: streak)))) {
+      final entryDate =
+          DateTime(entry.date.year, entry.date.month, entry.date.day);
+      final checkDate =
+          DateTime(currentDate.year, currentDate.month, currentDate.day);
+
+      if (entryDate.isAtSameMomentAs(checkDate) ||
+          entryDate
+              .isAtSameMomentAs(checkDate.subtract(Duration(days: streak)))) {
         streak++;
         currentDate = currentDate.subtract(Duration(days: 1));
       } else {
         break;
       }
     }
-    
+
     return streak;
   }
 
@@ -218,7 +224,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       source: ImageSource.gallery,
       imageQuality: 80,
     );
-    
+
     if (pickedFile != null) {
       setState(() {
         _profileImage = File(pickedFile.path);
@@ -232,24 +238,24 @@ class _ProfileScreenState extends State<ProfileScreen>
     if (!_formKey.currentState!.validate()) return;
 
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    
+
     String? newPassword;
     if (_passwordController.text.isNotEmpty) {
       newPassword = _passwordController.text;
     }
-    
+
     await authProvider.updateProfile(
       _nameController.text.trim(),
       newPassword,
     );
-    
+
     if (mounted) {
       setState(() {
         _isEditing = false;
         _passwordController.clear();
         _confirmPasswordController.clear();
       });
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Row(
@@ -261,7 +267,8 @@ class _ProfileScreenState extends State<ProfileScreen>
           ),
           backgroundColor: Colors.green,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       );
     }
@@ -270,15 +277,16 @@ class _ProfileScreenState extends State<ProfileScreen>
   Future<void> _exportData() async {
     final entryProvider = Provider.of<EntryProvider>(context, listen: false);
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
-    
+
     try {
-      final pdfFile = await entryProvider.exportToPdf(authProvider.user?.name ?? 'User');
-      
+      final pdfFile =
+          await entryProvider.exportToPdf(authProvider.user?.name ?? 'User');
+
       await Share.shareXFiles(
         [XFile(pdfFile.path)],
         text: 'My Foshmed Diary Export',
       );
-      
+
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -291,7 +299,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
         );
       }
@@ -308,7 +317,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
             backgroundColor: Colors.red,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
         );
       }
@@ -318,7 +328,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Future<void> _logout() async {
     final authProvider = Provider.of<AuthProvider>(context, listen: false);
     await authProvider.logout();
-    
+
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const LoginScreen()),
@@ -330,7 +340,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget _buildProfileHeader() {
     final authProvider = Provider.of<AuthProvider>(context);
     final user = authProvider.user;
-    
+
     return SlideTransition(
       position: _slideAnimation,
       child: FadeTransition(
@@ -346,18 +356,19 @@ class _ProfileScreenState extends State<ProfileScreen>
                     CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.white.withOpacity(0.2),
-                      backgroundImage: _profileImagePath != null 
+                      backgroundImage: _profileImagePath != null
                           ? FileImage(File(_profileImagePath!))
-                          : _profileImage != null 
+                          : _profileImage != null
                               ? FileImage(_profileImage!)
                               : null,
-                      child: (_profileImagePath == null && _profileImage == null)
-                          ? Icon(
-                              Icons.person,
-                              size: 50,
-                              color: Colors.white,
-                            )
-                          : null,
+                      child:
+                          (_profileImagePath == null && _profileImage == null)
+                              ? Icon(
+                                  Icons.person,
+                                  size: 50,
+                                  color: Colors.white,
+                                )
+                              : null,
                     ),
                     if (_isEditing)
                       Positioned(
@@ -404,9 +415,12 @@ class _ProfileScreenState extends State<ProfileScreen>
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildStatItem('Entries', _totalEntries.toString(), Icons.book),
-                  _buildStatItem('Streak', '$_currentStreak days', Icons.local_fire_department),
-                  _buildStatItem('Categories', _categoryStats.length.toString(), Icons.category),
+                  _buildStatItem(
+                      'Entries', _totalEntries.toString(), Icons.book),
+                  _buildStatItem('Streak', '$_currentStreak days',
+                      Icons.local_fire_department),
+                  _buildStatItem('Categories', _categoryStats.length.toString(),
+                      Icons.category),
                 ],
               ),
             ],
@@ -414,6 +428,42 @@ class _ProfileScreenState extends State<ProfileScreen>
         ),
       ),
     );
+  }
+
+// Tambahkan variabel untuk URL foto profil
+  String? _profileImageUrl; // Ambil dari user model/server
+
+  Widget _buildProfileImage() {
+    if (kIsWeb) {
+      // Web hanya bisa pakai network atau memory
+      if (_profileImageUrl != null && _profileImageUrl!.isNotEmpty) {
+        return CircleAvatar(
+          radius: 50,
+          backgroundImage: NetworkImage(_profileImageUrl!),
+        );
+      }
+      return CircleAvatar(
+        radius: 50,
+        child: Icon(Icons.person, size: 50),
+      );
+    } else {
+      // Mobile bisa pakai FileImage atau NetworkImage
+      if (_profileImagePath != null && File(_profileImagePath!).existsSync()) {
+        return CircleAvatar(
+          radius: 50,
+          backgroundImage: FileImage(File(_profileImagePath!)),
+        );
+      } else if (_profileImageUrl != null && _profileImageUrl!.isNotEmpty) {
+        return CircleAvatar(
+          radius: 50,
+          backgroundImage: NetworkImage(_profileImageUrl!),
+        );
+      }
+      return CircleAvatar(
+        radius: 50,
+        child: Icon(Icons.person, size: 50),
+      );
+    }
   }
 
   Widget _buildStatItem(String label, String value, IconData icon) {
@@ -469,7 +519,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
               const SizedBox(height: 20),
-              
+
               // Mood distribution
               if (_moodStats.isNotEmpty) ...[
                 Text(
@@ -482,10 +532,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
                 const SizedBox(height: 12),
                 ..._moodStats.entries.map((entry) {
-                  final percentage = (_totalEntries > 0) ? (entry.value / _totalEntries) : 0.0;
+                  final percentage =
+                      (_totalEntries > 0) ? (entry.value / _totalEntries) : 0.0;
                   final emoji = Constants.moodEmojis[entry.key] ?? '😊';
                   final color = Constants.moodColors[entry.key] ?? Colors.blue;
-                  
+
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Row(
@@ -497,7 +548,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     entry.key,
@@ -516,7 +568,8 @@ class _ProfileScreenState extends State<ProfileScreen>
                               LinearProgressIndicator(
                                 value: percentage,
                                 backgroundColor: Colors.white.withOpacity(0.2),
-                                valueColor: AlwaysStoppedAnimation<Color>(color),
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(color),
                               ),
                             ],
                           ),
@@ -527,7 +580,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 }).toList(),
                 const SizedBox(height: 20),
               ],
-              
+
               // Category distribution
               if (_categoryStats.isNotEmpty) ...[
                 Text(
@@ -544,11 +597,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                   runSpacing: 8,
                   children: _categoryStats.entries.map((entry) {
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.white.withOpacity(0.3)),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.3)),
                       ),
                       child: Text(
                         '${entry.key} (${entry.value})',
@@ -570,7 +625,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Widget _buildSettings() {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    
+
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(1, 0),
@@ -595,12 +650,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                 ),
               ),
               const SizedBox(height: 20),
-              
+
               // Dark mode toggle
               Row(
                 children: [
                   Icon(
-                    themeProvider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                    themeProvider.isDarkMode
+                        ? Icons.dark_mode
+                        : Icons.light_mode,
                     color: Colors.white,
                   ),
                   const SizedBox(width: 12),
@@ -622,11 +679,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                 ],
               ),
-              
+
               const SizedBox(height: 16),
               Divider(color: Colors.white.withOpacity(0.3)),
               const SizedBox(height: 16),
-              
+
               // Export data
               ListTile(
                 leading: Icon(Icons.download, color: Colors.white),
@@ -641,7 +698,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 onTap: _exportData,
                 contentPadding: EdgeInsets.zero,
               ),
-              
+
               // Edit profile
               ListTile(
                 leading: Icon(Icons.edit, color: Colors.white),
@@ -660,7 +717,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 },
                 contentPadding: EdgeInsets.zero,
               ),
-              
+
               // About
               ListTile(
                 leading: Icon(Icons.info, color: Colors.white),
@@ -696,11 +753,11 @@ class _ProfileScreenState extends State<ProfileScreen>
                 },
                 contentPadding: EdgeInsets.zero,
               ),
-              
+
               const SizedBox(height: 16),
               Divider(color: Colors.white.withOpacity(0.3)),
               const SizedBox(height: 16),
-              
+
               // Logout
               ListTile(
                 leading: Icon(Icons.logout, color: Colors.red),
@@ -743,7 +800,6 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
             const SizedBox(height: 20),
-            
             TextFormField(
               controller: _nameController,
               decoration: InputDecoration(
@@ -771,9 +827,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 return null;
               },
             ),
-            
             const SizedBox(height: 20),
-            
             TextFormField(
               controller: _passwordController,
               obscureText: true,
@@ -802,9 +856,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 return null;
               },
             ),
-            
             const SizedBox(height: 20),
-            
             TextFormField(
               controller: _confirmPasswordController,
               obscureText: true,
@@ -835,9 +887,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 return null;
               },
             ),
-            
             const SizedBox(height: 30),
-            
             Row(
               children: [
                 Expanded(
@@ -932,7 +982,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ],
                 ),
               ),
-              
+
               // Logout confirmation dialog
               if (_showLogoutConfirmation)
                 Container(

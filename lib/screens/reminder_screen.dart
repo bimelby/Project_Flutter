@@ -67,8 +67,8 @@ class _ReminderScreenState extends State<ReminderScreen> {
       type: _selectedType,
     );
 
-    /*final reminderProvider = Provider.of<ReminderProvider>(context, listen: false);
-    await reminderProvider.addReminder(reminder);*/
+    final reminderProvider = Provider.of<ReminderProvider>(context, listen: false);
+    await reminderProvider.addReminder(reminder);
 
     _titleController.clear();
     _descriptionController.clear();
@@ -220,7 +220,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
               ),
               
               // Reminders List
-              /*Expanded(
+              Expanded(
                 child: Consumer<ReminderProvider>(
                   builder: (context, reminderProvider, child) {
                     final reminders = reminderProvider.reminders;
@@ -323,7 +323,7 @@ class _ReminderScreenState extends State<ReminderScreen> {
                     );
                   },
                 ),
-              ),*/
+              ),
             ],
           ),
         ),

@@ -27,7 +27,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => ThemeProvider(prefs)),
         ChangeNotifierProvider(create: (_) => AuthProvider(prefs)),
         ChangeNotifierProvider(create: (_) => EntryProvider()),
-        /*ChangeNotifierProvider(create: (_) => ReminderProvider()),*/
+        ChangeNotifierProvider(create: (_) => ReminderProvider()),
         ChangeNotifierProvider(create: (_) => TemplateProvider()),
       ],
       child: const MyApp(),

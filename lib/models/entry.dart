@@ -21,8 +21,8 @@ class Entry {
 
   factory Entry.fromJson(Map<String, dynamic> json) {
     return Entry(
-      id: json['id'],
-      userId: json['user_id'],
+      id: json['id'].toString(),
+      userId: json['user_id'].toString(),
       title: json['title'],
       content: json['content'],
       mood: json['mood'],

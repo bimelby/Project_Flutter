@@ -19,8 +19,8 @@ class Reminder {
 
   factory Reminder.fromJson(Map<String, dynamic> json) {
     return Reminder(
-      id: json['id'],
-      entryId: json['entry_id'] ?? '',
+      id: json['id'].toString(),
+      entryId: json['entry_id']?.toString() ?? '',
       title: json['title'],
       description: json['description'],
       dateTime: DateTime.parse(json['date_time']),

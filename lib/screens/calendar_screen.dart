@@ -26,7 +26,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   void initState() {
     super.initState();
     _selectedDay = DateTime.now();
-    /*_selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));*/
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
   @override
@@ -35,9 +35,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     super.dispose();
   }
 
-  /*List<dynamic> _getEventsForDay(DateTime day) {
+  List<dynamic> _getEventsForDay(DateTime day) {
     final entryProvider = Provider.of<EntryProvider>(context, listen: false);
-    final reminderProvider = Provider.of<ReminderProvider>(context, listen: false);*
+    final reminderProvider = Provider.of<ReminderProvider>(context, listen: false);
     
     final entries = entryProvider.entries.where((entry) {
       return isSameDay(entry.date, day);
@@ -48,7 +48,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     }).toList();
     
     return [...entries, ...reminders];
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         _selectedDay = selectedDay;
                         _focusedDay = focusedDay;
                       });
-                      /*_selectedEvents.value = _getEventsForDay(selectedDay);*/
+                      _selectedEvents.value = _getEventsForDay(selectedDay);
                     }
                   },
                   onFormatChanged: (format) {

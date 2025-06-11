@@ -115,7 +115,7 @@ class EntryProvider with ChangeNotifier {
   Entry entry,
   String token,
   File? imageFile, {
-  XFile? webImageFile, // Tambahkan parameter opsional untuk web
+  XFile? webImageFile, // Tambahkan parameter opsional untuk we
 }) async {
   print('Adding new entry: ${entry.title}');
   _isLoading = true;
@@ -202,7 +202,6 @@ class EntryProvider with ChangeNotifier {
   Future<bool> updateEntry(Entry entry, String token, File? imageFile) async {
     _isLoading = true;
     notifyListeners();
-
     try {
       var request = http.MultipartRequest(
         'POST',

@@ -114,12 +114,12 @@ class EntryCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Image.network(
                     entry.imageUrl!,
-                    height: 120,
+                    height: 700,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        height: 120,
+                        height: 700,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.1),

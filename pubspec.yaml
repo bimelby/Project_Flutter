@@ -23,6 +23,8 @@ dependencies:
 
   table_calendar: ^3.1.1         # Versi terbaru
 
+  flutter_local_notifications: ^16.3.2
+
   timezone: ^0.9.2
 
   # Image Handling

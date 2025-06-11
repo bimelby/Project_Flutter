@@ -7,24 +7,24 @@ plugins {
 android {
     ndkVersion = "27.0.12077973"
     namespace = "com.example.foshmed"
-    compileSdk = 35
+    compileSdk = flutter.compileSdkVersion
 
     defaultConfig {
         applicationId = "com.example.foshmed"
         minSdk = flutter.minSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        targetSdk = 35
+        targetSdk = flutter.targetSdkVersion
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
         isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     buildTypes {
