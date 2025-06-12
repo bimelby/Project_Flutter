@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Constants {
 
-  static const String apiUrl = 'https://project-flutter-chj7.vercel.app';
+  static const String apiUrl = 'http://192.168.1.174/foshmed/api';
   
   static const List<String> moodOptions = [
     'Happy',
