@@ -12,6 +12,10 @@ import 'package:foshmed/widgets/glass_container.dart';
 import 'package:foshmed/widgets/custom_button.dart';
 import 'package:foshmed/widgets/mood_selector.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
+
+
 
 class EntryDetailScreen extends StatefulWidget {
   final Entry entry;
