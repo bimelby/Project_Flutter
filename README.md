@@ -12,16 +12,16 @@
 - 🔍 Pencarian cepat untuk menemukan catatan spesifik
 - 🗂️ Kategorikan catatan dengan sistem label
 - 🌙 Mode gelap untuk kenyamanan mata
-- 🔐 Penyimpanan data aman dengan Firebase
-- 📱 Desain responsif untuk semua perangka
-- ⚡ Sinkronisasi cloud antar perangkat
--  / Dan fitur lainnya
+- 🔐 Penyimpanan data aman dengan mysql
+- 📱 Desain responsif untuk semua perangkat
+- ⚡  Dan fitur lainny
+
 
 ## 🖼️ Tampilan Aplikasi
 
 | Tampilan Daftar Catatan | Tambah Catatan Baru | Mode Gelap |
 |-------------------------|---------------------|------------|
-| ![List View](https://via.placeholder.com/300x600/4f46e5/ffffff?text=Daftar+Catatan) | ![Add Note](https://via.placeholder.com/300x600/10b981/ffffff?text=Tambah+Catatan) | ![Dark Mode](https://via.placeholder.com/300x600/1e293b/ffffff?text=Mode+Gelap) |
+| ![List View]() | ![Add Note]() | ![Dark Mode]() |
 
 ## 🚀 Cara Memulai
 
