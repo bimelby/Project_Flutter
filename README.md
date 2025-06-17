@@ -17,18 +17,14 @@
 - ⚡  Dan fitur lainny
 
 
-## 🖼️ Tampilan Aplikasi
 
-| Tampilan Daftar Catatan | Tambah Catatan Baru | Mode Gelap |
-|-------------------------|---------------------|------------|
-| ![List View]() | ![Add Note]() | ![Dark Mode]() |
 
 ## 🚀 Cara Memulai
 
 ### Prasyarat
 - Flutter SDK (versi terbaru)
 - Android Studio/VSCode dengan ekstensi Flutter
-- Akun Firebase untuk backend
+- Akun mysql dan api  untuk backend 
 
 ### Instalasi
 1. Clone repositori ini:
@@ -46,12 +42,7 @@ cd Project_Flutter
 flutter pub get
 ```
 
-4. Hubungkan dengan Firebase:
-- Buat proyek Firebase baru
-- Download file `google-services.json` untuk Android
-- Letakkan di `android/app/google-services.json`
-
-5. Jalankan aplikasi:
+4. Jalankan aplikasi:
 ```bash
 flutter run
 ```
