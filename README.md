@@ -12,23 +12,19 @@
 - 🔍 Pencarian cepat untuk menemukan catatan spesifik
 - 🗂️ Kategorikan catatan dengan sistem label
 - 🌙 Mode gelap untuk kenyamanan mata
-- 🔐 Penyimpanan data aman dengan Firebase
-- 📱 Desain responsif untuk semua perangka
-- ⚡ Sinkronisasi cloud antar perangkat
--  / Dan fitur lainnya
+- 🔐 Penyimpanan data aman dengan mysql
+- 📱 Desain responsif untuk semua perangkat
+- ⚡  Dan fitur lainny
 
-## 🖼️ Tampilan Aplikasi
 
-| Tampilan Daftar Catatan | Tambah Catatan Baru | Mode Gelap |
-|-------------------------|---------------------|------------|
-| ![List View](https://via.placeholder.com/300x600/4f46e5/ffffff?text=Daftar+Catatan) | ![Add Note](https://via.placeholder.com/300x600/10b981/ffffff?text=Tambah+Catatan) | ![Dark Mode](https://via.placeholder.com/300x600/1e293b/ffffff?text=Mode+Gelap) |
+
 
 ## 🚀 Cara Memulai
 
 ### Prasyarat
 - Flutter SDK (versi terbaru)
 - Android Studio/VSCode dengan ekstensi Flutter
-- Akun Firebase untuk backend
+- Akun mysql dan api  untuk backend 
 
 ### Instalasi
 1. Clone repositori ini:
@@ -46,12 +42,7 @@ cd Project_Flutter
 flutter pub get
 ```
 
-4. Hubungkan dengan Firebase:
-- Buat proyek Firebase baru
-- Download file `google-services.json` untuk Android
-- Letakkan di `android/app/google-services.json`
-
-5. Jalankan aplikasi:
+4. Jalankan aplikasi:
 ```bash
 flutter run
 ```
