@@ -55,6 +55,12 @@ flutter:
     - assets/images/
 
   fonts:
+    - family: NotoSans
+      fonts:
+        - asset: fonts/NotoSans-Regular.ttf
+    - family: NotoColorEmoji
+      fonts:
+        - asset: fonts/NotoColorEmoji-Regular.ttf
     - family: Roboto
       fonts:
         - asset: fonts/Roboto-Regular.ttf

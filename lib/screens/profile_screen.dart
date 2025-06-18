@@ -525,6 +525,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 Text(
                   'Mood Distribution',
                   style: TextStyle(
+                    fontFamily: 'NotoColorEmoji',
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,

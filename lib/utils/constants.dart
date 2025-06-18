@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Constants {
+  static const String apiUrl = 'http://127.0.0.1/foshmed/api';
 
-  static const String apiUrl = 'http://172.16.203.5/foshmed/api';
-  
   static const List<String> moodOptions = [
     'Happy',
     'Sad',
@@ -18,7 +17,7 @@ class Constants {
     'Peaceful',
     'Stressed',
   ];
-  
+
   static const List<String> categoryOptions = [
     'Personal',
     'Work',
@@ -33,7 +32,7 @@ class Constants {
     'Reflection',
     'Other',
   ];
-  
+
   static const Map<String, String> moodEmojis = {
     'Happy': '😊',
     'Sad': '😢',
@@ -48,7 +47,7 @@ class Constants {
     'Peaceful': '☮️',
     'Stressed': '😫',
   };
-  
+
   static const Map<String, Color> moodColors = {
     'Happy': Color(0xFF4CAF50),
     'Sad': Color(0xFF2196F3),

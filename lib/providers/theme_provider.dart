@@ -29,6 +29,7 @@ class MyThemes {
   static final Color accentColor = Color(0xFF60A5FA);
 
   static final ThemeData lightTheme = ThemeData(
+    fontFamily: 'NotoSans',
     primaryColor: primaryColor,
     colorScheme: ColorScheme.light(
       primary: primaryColor,
@@ -44,14 +45,16 @@ class MyThemes {
         color: Colors.black87,
         fontSize: 20,
         fontWeight: FontWeight.bold,
+        fontFamily: 'NotoSans',
       ),
     ),
+    
     textTheme: TextTheme(
-      displayLarge: TextStyle(color: Colors.black87),
-      displayMedium: TextStyle(color: Colors.black87),
-      bodyLarge: TextStyle(color: Colors.black87),
-      bodyMedium: TextStyle(color: Colors.black87),
-    ),
+    displayLarge: TextStyle(color: Colors.black87, fontFamily: 'NotoSans'),
+    displayMedium: TextStyle(color: Colors.black87, fontFamily: 'NotoSans'),
+    bodyLarge: TextStyle(color: Colors.black87, fontFamily: 'NotoSans'),
+    bodyMedium: TextStyle(color: Colors.black87, fontFamily: 'NotoSans'),
+  ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,
@@ -65,6 +68,7 @@ class MyThemes {
   );
 
   static final ThemeData darkTheme = ThemeData(
+    fontFamily: 'NotoSans',
     primaryColor: primaryColor,
     colorScheme: ColorScheme.dark(
       primary: primaryColor,
@@ -80,14 +84,15 @@ class MyThemes {
         color: Colors.white,
         fontSize: 20,
         fontWeight: FontWeight.bold,
+        fontFamily: 'NotoSans',
       ),
     ),
     textTheme: TextTheme(
-      displayLarge: TextStyle(color: Colors.white),
-      displayMedium: TextStyle(color: Colors.white),
-      bodyLarge: TextStyle(color: Colors.white),
-      bodyMedium: TextStyle(color: Colors.white),
-    ),
+    displayLarge: TextStyle(color: Colors.white, fontFamily: 'NotoSans'),
+    displayMedium: TextStyle(color: Colors.white, fontFamily: 'NotoSans'),
+    bodyLarge: TextStyle(color: Colors.white, fontFamily: 'NotoSans'),
+    bodyMedium: TextStyle(color: Colors.white, fontFamily: 'NotoSans'),
+  ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: primaryColor,

@@ -104,6 +104,7 @@ class _MoodChartState extends State<MoodChart>
           Text(
             'Mood Distribution',
             style: TextStyle(
+              fontFamily: 'NotoColorEmoji',
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.white,

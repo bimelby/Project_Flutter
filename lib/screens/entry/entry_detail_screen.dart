@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -14,9 +15,6 @@ import 'package:foshmed/widgets/mood_selector.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-
-
-
 class EntryDetailScreen extends StatefulWidget {
   final Entry entry;
 
@@ -27,7 +25,9 @@ class EntryDetailScreen extends StatefulWidget {
 }
 
 class _EntryDetailScreenState extends State<EntryDetailScreen>
+
     with TickerProviderStateMixin {
+      
   late AnimationController _slideController;
   late AnimationController _fadeController;
   late AnimationController _scaleController;
@@ -45,6 +45,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
   late String _selectedMood;
   late String _selectedCategory;
   File? _newImageFile;
+  XFile? _webImageFile;
   final _imagePicker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
 
@@ -135,10 +136,16 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       source: ImageSource.gallery,
       imageQuality: 80,
     );
-
     if (pickedFile != null) {
       setState(() {
-        _newImageFile = File(pickedFile.path);
+        if (kIsWeb) {
+          _webImageFile = pickedFile;
+          _newImageFile = null;
+        } else {
+          _newImageFile = File(pickedFile.path);
+          _webImageFile = null;
+        }
+        
       });
     }
   }
@@ -308,7 +315,11 @@ Shared from Foshmed - Digital Diary
                             ),
                             child: Text(
                               emoji,
-                              style: TextStyle(fontSize: 24),
+                              style: TextStyle( 
+                                fontFamily: 'NotoColorEmoji',
+                                fontSize: 24,
+                              ),
+                              
                             ),
                           ),
                         ),
@@ -320,6 +331,8 @@ Shared from Foshmed - Digital Diary
                               Text(
                                 widget.entry.mood,
                                 style: TextStyle(
+                                  fontFamily: 'NotoColorEmoji',
+                                  height: 1.1,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -379,10 +392,11 @@ Shared from Foshmed - Digital Diary
                 child: Text(
                   widget.entry.title,
                   style: TextStyle(
+                    fontFamily: 'NotoColorEmoji',
+                    height: 1.1,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    height: 1.3,
                   ),
                 ),
               ),
@@ -477,9 +491,10 @@ Shared from Foshmed - Digital Diary
                 child: Text(
                   widget.entry.content,
                   style: TextStyle(
+                    fontFamily: 'NotoColorEmoji',
+                    height: 1.1,
                     fontSize: 16,
                     color: Colors.white.withOpacity(0.9),
-                    height: 1.6,
                   ),
                 ),
               ),
@@ -510,7 +525,7 @@ Shared from Foshmed - Digital Diary
                 children: [
                   Text(
                     'How are you feeling?',
-                    style: TextStyle(
+                    style: TextStyle( 
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -540,6 +555,8 @@ Shared from Foshmed - Digital Diary
                   Text(
                     'Category',
                     style: TextStyle(
+                      fontFamily: 'NotoColorEmoji',
+                      height: 1.1,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
