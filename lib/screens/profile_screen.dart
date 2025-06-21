@@ -232,6 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       });
       await _saveProfileImage(pickedFile.path);
     }
+    
   }
 
   Future<void> _updateProfile() async {

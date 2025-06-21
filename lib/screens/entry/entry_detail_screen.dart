@@ -25,9 +25,7 @@ class EntryDetailScreen extends StatefulWidget {
 }
 
 class _EntryDetailScreenState extends State<EntryDetailScreen>
-
     with TickerProviderStateMixin {
-      
   late AnimationController _slideController;
   late AnimationController _fadeController;
   late AnimationController _scaleController;
@@ -40,6 +38,7 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
 
   bool _isEditing = false;
   bool _showDeleteConfirmation = false;
+  bool _removeImage = false;
   late TextEditingController _titleController;
   late TextEditingController _contentController;
   late String _selectedMood;
@@ -145,7 +144,6 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
           _newImageFile = File(pickedFile.path);
           _webImageFile = null;
         }
-        
       });
     }
   }
@@ -173,6 +171,8 @@ class _EntryDetailScreenState extends State<EntryDetailScreen>
       updatedEntry,
       authProvider.user!.token,
       _newImageFile,
+      removeImage: _removeImage,
+      webImageFile: _webImageFile,
     );
 
     if (success && mounted) {
@@ -315,11 +315,10 @@ Shared from Foshmed - Digital Diary
                             ),
                             child: Text(
                               emoji,
-                              style: TextStyle( 
-                                fontFamily: 'NotoColorEmoji',
+                              style: TextStyle(
+                                fontFamily: 'NotoSans',
                                 fontSize: 24,
                               ),
-                              
                             ),
                           ),
                         ),
@@ -331,7 +330,7 @@ Shared from Foshmed - Digital Diary
                               Text(
                                 widget.entry.mood,
                                 style: TextStyle(
-                                  fontFamily: 'NotoColorEmoji',
+                                  fontFamily: 'NotoSans',
                                   height: 1.1,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -392,7 +391,7 @@ Shared from Foshmed - Digital Diary
                 child: Text(
                   widget.entry.title,
                   style: TextStyle(
-                    fontFamily: 'NotoColorEmoji',
+                    fontFamily: 'NotoSans',
                     height: 1.1,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -491,7 +490,7 @@ Shared from Foshmed - Digital Diary
                 child: Text(
                   widget.entry.content,
                   style: TextStyle(
-                    fontFamily: 'NotoColorEmoji',
+                    fontFamily: 'NotoSans',
                     height: 1.1,
                     fontSize: 16,
                     color: Colors.white.withOpacity(0.9),
@@ -501,7 +500,7 @@ Shared from Foshmed - Digital Diary
             ),
           ),
 
-          const SizedBox(height: 100), // Space for FAB
+          /*const SizedBox(height: 100), // Space for FAB*/
         ],
       ),
     );
@@ -525,7 +524,7 @@ Shared from Foshmed - Digital Diary
                 children: [
                   Text(
                     'How are you feeling?',
-                    style: TextStyle( 
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -555,7 +554,7 @@ Shared from Foshmed - Digital Diary
                   Text(
                     'Category',
                     style: TextStyle(
-                      fontFamily: 'NotoColorEmoji',
+                      fontFamily: 'NotoSans',
                       height: 1.1,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -731,6 +730,8 @@ Shared from Foshmed - Digital Diary
                           onPressed: () {
                             setState(() {
                               _newImageFile = null;
+                              _webImageFile = null;
+                              _removeImage = true;
                             });
                           },
                         ),
@@ -756,6 +757,7 @@ Shared from Foshmed - Digital Diary
                         _selectedMood = widget.entry.mood;
                         _selectedCategory = widget.entry.category;
                         _newImageFile = null;
+                        _webImageFile = null;
                       });
                     },
                     style: OutlinedButton.styleFrom(
@@ -868,6 +870,8 @@ Shared from Foshmed - Digital Diary
         ],
       ),
       body: Container(
+         width: double.infinity,
+         height: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/entry_detail_background.jpg'),

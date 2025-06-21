@@ -112,6 +112,18 @@ class AuthProvider with ChangeNotifier {
       return false;
     }
   }
+  void updateProfileImageUrl(String url) {
+  if (_user != null) {
+    _user = User(
+      id: _user!.id,
+      name: _user!.name,
+      email: _user!.email,
+      token: _user!.token,
+      profileImageUrl: url,
+    );
+    notifyListeners();
+   }
+  }
 
   Future<void> logout() async {
     _user = null;

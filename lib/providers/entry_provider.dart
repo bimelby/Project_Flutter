@@ -199,7 +199,8 @@ class EntryProvider with ChangeNotifier {
   }
 }
 
-  Future<bool> updateEntry(Entry entry, String token, File? imageFile) async {
+  Future<bool> updateEntry(Entry entry, String token, File? imageFile,{
+  bool removeImage = false,XFile? webImageFile,}) async {
     _isLoading = true;
     notifyListeners();
     try {
@@ -215,13 +216,26 @@ class EntryProvider with ChangeNotifier {
       request.fields['content'] = entry.content;
       request.fields['mood'] = entry.mood;
       request.fields['category'] = entry.category;
+      request.fields['remove_image'] = removeImage ? '1' : '0';
 
-      if (imageFile != null) {
-        request.files.add(await http.MultipartFile.fromPath(
+      if (kIsWeb && webImageFile != null) {
+      final bytes = await webImageFile.readAsBytes();
+      request.files.add(http.MultipartFile.fromBytes(
+        'image',
+        bytes,
+        filename: webImageFile.name,
+        contentType: MediaType(
           'image',
-          imageFile.path,
-        ));
-      }
+          webImageFile.mimeType?.split('/').last ?? 'jpeg',
+        ),
+      ));
+    } else if (!kIsWeb && imageFile != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'image',
+        imageFile.path,
+      ));
+    }
+      
 
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
